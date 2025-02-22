@@ -26,8 +26,6 @@
  */
 package de.javagl.jgltf.model.io;
 
-import net.fate.physxcore.Core;
-
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

@@ -25,8 +25,6 @@
  */
 package de.javagl.jgltf.model;
 
-import net.fate.physxcore.Core;
-
 import java.nio.ByteBuffer;
 import java.util.Locale;
 import java.util.logging.Logger;

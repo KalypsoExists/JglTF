@@ -32,7 +32,6 @@ import java.util.function.Consumer;
 import de.javagl.jgltf.model.BufferModel;
 import de.javagl.jgltf.model.BufferViewModel;
 import de.javagl.jgltf.model.io.Buffers;
-import net.fate.physxcore.Core;
 
 /**
  * Implementation of a {@link BufferViewModel}

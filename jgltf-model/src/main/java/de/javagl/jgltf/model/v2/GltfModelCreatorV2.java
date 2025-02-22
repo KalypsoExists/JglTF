@@ -113,7 +113,6 @@ import de.javagl.jgltf.model.io.MimeTypes;
 import de.javagl.jgltf.model.io.v2.GltfAssetV2;
 import de.javagl.jgltf.model.v2.MaterialModelV2.AlphaMode;
 import de.javagl.jgltf.model.v2.gl.Materials;
-import net.fate.physxcore.Core;
 
 /**
  * A class that is responsible for filling a {@link DefaultGltfModel} with
