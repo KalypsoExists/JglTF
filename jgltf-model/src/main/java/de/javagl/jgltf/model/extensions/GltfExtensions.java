@@ -28,9 +28,7 @@ package de.javagl.jgltf.model.extensions;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import de.javagl.jgltf.model.io.JacksonUtils;
+import com.google.gson.Gson;
 
 /**
  * Utility methods related to glTF extension objects.
@@ -39,13 +37,13 @@ public class GltfExtensions
 {
     /**
      * Obtain the specified extension object from the given glTF property.
-     * 
+     *
      * If the given glTF object does not have an extension with the
      * given name, or this object cannot be converted to the given
      * target type, then <code>null</code> is returned.
-     *  
+     *
      * @param <T> The type of the extension object
-     * 
+     *
      * @param gltfProperty The glTF property
      * @param extensionName The extension name
      * @param extensionType The extension type
@@ -55,29 +53,29 @@ public class GltfExtensions
      * a <code>de.javagl.jgltf.impl.v2.GlTFProperty</code>
      */
     public static <T> T obtain(
-        Object gltfProperty, String extensionName, Class<T> extensionType)
+            Object gltfProperty, String extensionName, Class<T> extensionType)
     {
         if (gltfProperty instanceof de.javagl.jgltf.impl.v1.GlTFProperty)
         {
-            de.javagl.jgltf.impl.v1.GlTFProperty gltfPropertyV1 = 
-                (de.javagl.jgltf.impl.v1.GlTFProperty) gltfProperty;
+            de.javagl.jgltf.impl.v1.GlTFProperty gltfPropertyV1 =
+                    (de.javagl.jgltf.impl.v1.GlTFProperty) gltfProperty;
             Map<String, Object> extensions = gltfPropertyV1.getExtensions();
             return obtainInternal(extensions, extensionName, extensionType);
         }
         if (gltfProperty instanceof de.javagl.jgltf.impl.v2.GlTFProperty)
         {
-            de.javagl.jgltf.impl.v2.GlTFProperty gltfPropertyV2 = 
-                (de.javagl.jgltf.impl.v2.GlTFProperty) gltfProperty;
+            de.javagl.jgltf.impl.v2.GlTFProperty gltfPropertyV2 =
+                    (de.javagl.jgltf.impl.v2.GlTFProperty) gltfProperty;
             Map<String, Object> extensions = gltfPropertyV2.getExtensions();
             return obtainInternal(extensions, extensionName, extensionType);
         }
         throw new IllegalArgumentException(
-            "Not a valid glTF property: " + gltfProperty);
+                "Not a valid glTF property: " + gltfProperty);
     }
 
     /**
      * Internal method to obtain the extension object from the given map
-     * 
+     *
      * @param <T> The type of the extension object
      * @param extensions The optional extensions map
      * @param extensionName The extension name
@@ -86,8 +84,8 @@ public class GltfExtensions
      * obtained
      */
     private static <T> T obtainInternal(
-        Map<String, Object> extensions,
-        String extensionName, Class<T> extensionType)
+            Map<String, Object> extensions,
+            String extensionName, Class<T> extensionType)
     {
         if (extensions == null)
         {
@@ -100,10 +98,10 @@ public class GltfExtensions
         }
         return convertValueOptional(object, extensionType);
     }
-    
+
     /**
      * Convert the given object to the given target type
-     * 
+     *
      * @param <T> The target type
      * @param object The object
      * @param type The target type
@@ -111,16 +109,16 @@ public class GltfExtensions
      * @throws IllegalArgumentException If the conversion failed
      */
     private static <T> T convertValue(Object object, Class<T> type)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
-        ObjectMapper objectMapper = JacksonUtils.createObjectMapper();
-        return objectMapper.convertValue(object, type);
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJsonTree(object), type);
     }
-    
+
     /**
-     * Convert the given object to the given target type, returning 
+     * Convert the given object to the given target type, returning
      * <code>null</code> if the conversion failed
-     * 
+     *
      * @param <T> The target type
      * @param object The object
      * @param type The target type
@@ -137,9 +135,9 @@ public class GltfExtensions
             return null;
         }
     }
-    
 
-    
+
+
     /**
      * Private constructor to prevent instantiation
      */

@@ -27,11 +27,8 @@
 package de.javagl.jgltf.model.v2;
 
 import java.nio.ByteBuffer;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -116,6 +113,7 @@ import de.javagl.jgltf.model.io.MimeTypes;
 import de.javagl.jgltf.model.io.v2.GltfAssetV2;
 import de.javagl.jgltf.model.v2.MaterialModelV2.AlphaMode;
 import de.javagl.jgltf.model.v2.gl.Materials;
+import net.fate.physxcore.Core;
 
 /**
  * A class that is responsible for filling a {@link DefaultGltfModel} with

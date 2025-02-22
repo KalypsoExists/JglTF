@@ -92,6 +92,10 @@ public final class AccessorFloatData
         int byteIndex = getByteIndex(elementIndex, componentIndex);
         return getBufferViewByteBuffer().getFloat(byteIndex);
     }
+
+    public float getFloat(int elementIndex, int componentIndex) {
+        return get(elementIndex, componentIndex);
+    }
     
     /**
      * Returns the value of the specified component

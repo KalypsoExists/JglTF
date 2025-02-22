@@ -109,6 +109,11 @@ public final class AccessorIntData
         int byteIndex = getByteIndex(elementIndex, componentIndex);
         return getBufferViewByteBuffer().getInt(byteIndex);
     }
+
+    public float getFloat(int elementIndex, int componentIndex) {
+        int value = get(elementIndex, componentIndex);
+        return unsigned ? Integer.toUnsignedLong(value) / (Integer.MAX_VALUE - Integer.MIN_VALUE) : Math.max(value / Integer.MAX_VALUE, -1.0F);
+    }
     
     /**
      * Returns the value of the specified component

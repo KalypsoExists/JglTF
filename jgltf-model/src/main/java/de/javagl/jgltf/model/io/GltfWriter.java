@@ -28,9 +28,9 @@ package de.javagl.jgltf.model.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.GsonBuilder;
 
 /**
  * A class for writing a glTF as JSON
@@ -41,7 +41,7 @@ public final class GltfWriter
      * Whether the JSON output should be indented
      */
     private boolean indenting;
-    
+
     /**
      * Creates a new glTF writer. By default, the output written by this class
      * will be indented.
@@ -50,46 +50,47 @@ public final class GltfWriter
     {
         this.indenting = true;
     }
-    
+
     /**
      * Set whether the JSON output should be indented
-     * 
+     *
      * @param indenting whether the JSON output should be indented
      */
     public void setIndenting(boolean indenting)
     {
         this.indenting = indenting;
     }
-    
+
     /**
      * Returns whether the JSON output will be indented
-     * 
+     *
      * @return Whether the JSON output will be indented
      */
     public boolean isIndenting()
     {
         return indenting;
     }
-    
+
     /**
      * Write the given glTF to the given output stream. The caller
      * is responsible for closing the stream.
-     * 
+     *
      * @param gltf The glTF
      * @param outputStream The output stream
      * @throws IOException If an IO error occurred
      */
-    public void write(Object gltf, OutputStream outputStream) 
-        throws IOException 
+    public void write(Object gltf, OutputStream outputStream)
+            throws IOException
     {
-        ObjectMapper objectMapper = JacksonUtils.createObjectMapper();
+        GsonBuilder gsonBuilder = new GsonBuilder();
         if (indenting)
         {
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            gsonBuilder.setPrettyPrinting();
         }
-        objectMapper.writeValue(outputStream, gltf);
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream);
+        gsonBuilder.create().toJson(gsonBuilder, writer);
+        writer.close();
     }
-    
-}
 
+}
 

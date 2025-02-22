@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
-import java.util.function.Consumer;
 
 import de.javagl.jgltf.model.GltfModel;
 import de.javagl.jgltf.model.GltfModels;
@@ -46,9 +45,9 @@ import de.javagl.jgltf.model.io.v2.GltfAssetV2;
  * of the given URI, and loaded automatically. The respective data may
  * then be obtained with {@link GltfAsset#getReferenceData(String)}.<br>
  * <br>
- * The {@link #readWithoutReferences(URI)} and 
+ * The {@link #readWithoutReferences(URI)} and
  * {@link #readWithoutReferences(InputStream)} methods allow reading an
- * asset from a URI or an input stream, <i>without</i> resolving external 
+ * asset from a URI or an input stream, <i>without</i> resolving external
  * references. This is mainly intended for binary- or embedded glTF assets
  * that do not have external references, or for cases where the external
  * references should be resolved manually.<br>
@@ -59,34 +58,16 @@ import de.javagl.jgltf.model.io.v2.GltfAssetV2;
 public final class GltfAssetReader
 {
     /**
-     * A consumer for {@link JsonError}s that may occur while reading
-     * the glTF JSON
-     */
-    private Consumer<? super JsonError> jsonErrorConsumer;
-    
-    /**
      * Creates a new instance
      */
     public GltfAssetReader()
     {
         // Default constructor
     }
-    
-    /**
-     * Set the given consumer to receive {@link JsonError}s that may 
-     * occur when a glTF is read
-     * 
-     * @param jsonErrorConsumer The {@link JsonError} consumer
-     */
-    public void setJsonErrorConsumer(
-        Consumer<? super JsonError> jsonErrorConsumer)
-    {
-        this.jsonErrorConsumer = jsonErrorConsumer;
-    }
-    
+
     /**
      * Read the {@link GltfAsset} from the given URI
-     * 
+     *
      * @param uri The URI
      * @return The {@link GltfAsset}
      * @throws IOException If an IO error occurs
@@ -98,7 +79,7 @@ public final class GltfAssetReader
             GltfAsset gltfAsset = readWithoutReferences(inputStream);
             URI baseUri = IO.getParent(uri);
             GltfReferenceResolver.resolveAll(
-                gltfAsset.getReferences(), baseUri);
+                    gltfAsset.getReferences(), baseUri);
             return gltfAsset;
         }
     }
@@ -117,7 +98,7 @@ public final class GltfAssetReader
             GltfAsset gltfAsset = readWithoutReferences(inputStream);
             Path basePath = IO.getParent(path);
             GltfReferenceResolver.resolveAll(
-                gltfAsset.getReferences(), basePath);
+                    gltfAsset.getReferences(), basePath);
             return gltfAsset;
         }
     }
@@ -130,7 +111,7 @@ public final class GltfAssetReader
      * <br>
      * This is mainly intended for binary- or embedded glTF assets that do not
      * have external references.
-     * 
+     *
      * @param uri The URI
      * @return The {@link GltfAsset}
      * @throws IOException If an IO error occurs
@@ -142,9 +123,9 @@ public final class GltfAssetReader
             return readWithoutReferences(inputStream);
         }
     }
-    
+
     /**
-     * Read the glTF asset from the given input stream. The caller is 
+     * Read the glTF asset from the given input stream. The caller is
      * responsible for closing the given stream.<br>
      * <br>
      * In contrast to the {@link #read(URI)} method, this method will
@@ -153,13 +134,13 @@ public final class GltfAssetReader
      * This is mainly intended for binary- or embedded glTF assets that do not
      * have external references, or for cases where the external
      * references should be resolved manually.
-     * 
+     *
      * @param inputStream The input stream
      * @return The {@link GltfAsset}
      * @throws IOException If an IO error occurred
      */
-    public GltfAsset readWithoutReferences(InputStream inputStream) 
-        throws IOException
+    public GltfAsset readWithoutReferences(InputStream inputStream)
+            throws IOException
     {
         RawGltfData rawGltfData = RawGltfDataReader.read(inputStream);
         return read(rawGltfData);
@@ -167,7 +148,7 @@ public final class GltfAssetReader
 
     /**
      * Read the {@link GltfAsset} from the given {@link RawGltfData}
-     * 
+     *
      * @param rawGltfData The {@link RawGltfData}
      * @return The {@link GltfAsset}
      * @throws IOException If the data cannot be read
@@ -175,34 +156,33 @@ public final class GltfAssetReader
     GltfAsset read(RawGltfData rawGltfData) throws IOException
     {
         GltfReader gltfReader = new GltfReader();
-        gltfReader.setJsonErrorConsumer(jsonErrorConsumer);        
         ByteBuffer jsonData = rawGltfData.getJsonData();
         try (InputStream jsonInputStream =
-            Buffers.createByteBufferInputStream(jsonData))
+                     Buffers.createByteBufferInputStream(jsonData))
         {
             gltfReader.read(jsonInputStream);
             int majorVersion = gltfReader.getMajorVersion();
             if (majorVersion == 1)
             {
-                de.javagl.jgltf.impl.v1.GlTF gltfV1 = 
-                    gltfReader.getAsGltfV1();
-                return new GltfAssetV1(gltfV1, 
-                    rawGltfData.getBinaryData());
+                de.javagl.jgltf.impl.v1.GlTF gltfV1 =
+                        gltfReader.getAsGltfV1();
+                return new GltfAssetV1(gltfV1,
+                        rawGltfData.getBinaryData());
             }
             else if (majorVersion == 2)
             {
-                de.javagl.jgltf.impl.v2.GlTF gltfV2 = 
-                    gltfReader.getAsGltfV2();
-                return new GltfAssetV2(gltfV2, 
-                    rawGltfData.getBinaryData());
+                de.javagl.jgltf.impl.v2.GlTF gltfV2 =
+                        gltfReader.getAsGltfV2();
+                return new GltfAssetV2(gltfV2,
+                        rawGltfData.getBinaryData());
             }
             else
             {
                 throw new IOException(
-                    "Unsupported major version: " + majorVersion);
+                        "Unsupported major version: " + majorVersion);
             }
         }
     }
-    
-    
+
+
 }

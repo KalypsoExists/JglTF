@@ -25,6 +25,8 @@
  */
 package de.javagl.jgltf.model;
 
+import net.fate.physxcore.Core;
+
 import java.nio.ByteBuffer;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -299,7 +301,7 @@ public class AccessorDatas
      * {@link AccessorModel#getComponentType() component type} of the given
      * accessor is not <code>GL_BYTE</code> or <code>GL_UNSIGNED_BYTE</code>
      */
-    static AccessorByteData createByte(AccessorModel accessorModel)
+    public static AccessorByteData createByte(AccessorModel accessorModel)
     {
         BufferViewModel bufferViewModel = accessorModel.getBufferViewModel();
         return createByte(accessorModel, bufferViewModel.getBufferViewData());
@@ -339,7 +341,7 @@ public class AccessorDatas
      * accessorModel is not <code>GL_SHORT</code> or 
      * <code>GL_UNSIGNED_SHORT</code> 
      */
-    static AccessorShortData createShort(AccessorModel accessorModel)
+    public static AccessorShortData createShort(AccessorModel accessorModel)
     {
         BufferViewModel bufferViewModel = accessorModel.getBufferViewModel();
         return createShort(accessorModel, bufferViewModel.getBufferViewData());
@@ -379,7 +381,7 @@ public class AccessorDatas
      * {@link AccessorModel#getComponentType() component type} of the given
      * accessorModel is not <code>GL_INT</code> or <code>GL_UNSIGNED_INT</code> 
      */
-    static AccessorIntData createInt(AccessorModel accessorModel)
+    public static AccessorIntData createInt(AccessorModel accessorModel)
     {
         BufferViewModel bufferViewModel = accessorModel.getBufferViewModel();
         return createInt(accessorModel, bufferViewModel.getBufferViewData());

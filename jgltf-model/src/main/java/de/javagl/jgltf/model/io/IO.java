@@ -49,14 +49,14 @@ public class IO
     /**
      * Convert the given URI string into an absolute URI, resolving it
      * against the given base URI if necessary
-     * 
+     *
      * @param baseUri The base URI
      * @param uriString The URI string
      * @return The absolute URI
      * @throws IOException If the URI string is not valid
      */
-    public static URI makeAbsolute(URI baseUri, String uriString) 
-        throws IOException
+    public static URI makeAbsolute(URI baseUri, String uriString)
+            throws IOException
     {
         try
         {
@@ -73,7 +73,7 @@ public class IO
             throw new IOException("Invalid URI string: " + uriString, e);
         }
     }
-    
+
     /**
      * Convert the given URI string into an absolute path, resolving it
      * against the given base path if necessary
@@ -108,7 +108,7 @@ public class IO
      * given URI describes a file, this will return the URI of the 
      * directory. If the given URI describes a directory, this will
      * return the URI of the parent directory
-     *  
+     *
      * @param uri The URI
      * @return The parent URI
      */
@@ -116,7 +116,7 @@ public class IO
     {
         if (uri.getPath().endsWith("/"))
         {
-            return uri.resolve("..");        
+            return uri.resolve("..");
         }
         return uri.resolve(".");
     }
@@ -137,7 +137,7 @@ public class IO
 
     /**
      * Returns whether the given URI is a data URI. 
-     * 
+     *
      * @param uri The URI
      * @return Whether the string is a data URI
      */
@@ -145,11 +145,11 @@ public class IO
     {
         return "data".equalsIgnoreCase(uri.getScheme());
     }
-    
+
     /**
      * Returns whether the given string is a data URI. If the given string
      * is <code>null</code>, then <code>false</code> will be returned. 
-     * 
+     *
      * @param uriString The URI string
      * @return Whether the string is a data URI
      */
@@ -163,20 +163,20 @@ public class IO
         {
             URI uri = new URI(uriString);
             return isDataUri(uri);
-        } 
+        }
         catch (URISyntaxException e)
         {
             return false;
         }
     }
-    
+
     /**
      * Tries to extract the "file name" that is referred to with the 
      * given URI. This is the part behind the last <code>"/"</code> slash
      * that appears in the string representation of the given URI. If no 
      * file name can be extracted, then the string representation of the 
      * URI is returned.
-     * 
+     *
      * @param uri The URI
      * @return The file name
      */
@@ -190,12 +190,12 @@ public class IO
         }
         return s;
     }
-    
+
     /**
      * Returns whether the resource that is described with the given URI
      * exists. If an IO exception occurs during this check, this method
      * will simply return <code>false</code>. 
-     * 
+     *
      * @param uri The URI
      * @return Whether the resource exists
      */
@@ -204,17 +204,17 @@ public class IO
         try
         {
             return exists(uri);
-        } 
+        }
         catch (IOException e)
         {
             return false;
         }
     }
-   
+
     /**
      * Returns whether the resource that is described with the given URI
      * exists
-     * 
+     *
      * @param uri The URI
      * @return Whether the resource exists
      * @throws IOException If an IO error occurs. This usually implies that
@@ -234,12 +234,12 @@ public class IO
         String path = uri.getPath();
         return new File(path).exists();
     }
-    
-    
+
+
     /**
      * Try to obtain the content length from the given URI. Returns -1
      * if the content length can not be determined.
-     * 
+     *
      * @param uri The URI
      * @return The content length
      */
@@ -255,11 +255,11 @@ public class IO
             return -1;
         }
     }
-    
+
     /**
      * Creates an input stream from the given URI, which may either be
      * an actual (absolute) URI, or a data URI with base64 encoded data
-     * 
+     *
      * @param uri The URI
      * @return The input stream
      * @throws IOException If the stream can not be opened
@@ -309,13 +309,13 @@ public class IO
     /**
      * Read the data from the given URI as a byte array. The data may either
      * be an actual URI, or a data URI with base64 encoded data.
-     * 
+     *
      * @param uri The URI
      * @return The byte array
      * @throws IOException If an IO error occurs
      */
-    public static byte[] read(URI uri) 
-        throws IOException
+    public static byte[] read(URI uri)
+            throws IOException
     {
         try (InputStream inputStream = createInputStream(uri))
         {
@@ -330,7 +330,7 @@ public class IO
      * The data is assumed to start after the <code>base64,</code> part
      * of the URI string, which must have the form 
      * <code>data:...;base64,...</code>
-     * 
+     *
      * @param uriString The URI string
      * @return The data
      * @throws IllegalArgumentException If the given string is not a valid
@@ -343,19 +343,19 @@ public class IO
         if (encodingIndex < 0)
         {
             throw new IllegalArgumentException(
-                "The given URI string is not a base64 encoded "
-                + "data URI string: " + uriString);
+                    "The given URI string is not a base64 encoded "
+                            + "data URI string: " + uriString);
         }
         int contentStartIndex = encodingIndex + encoding.length();
         byte data[] = Base64.getDecoder().decode(
-            uriString.substring(contentStartIndex));
+                uriString.substring(contentStartIndex));
         return data;
     }
-    
+
     /**
      * Reads the data from the given inputStream and returns it as
      * a byte array. The caller is responsible for closing the stream.
-     * 
+     *
      * @param inputStream The input stream to read
      * @return The data from the inputStream
      * @throws IOException If an IO error occurs, or if the thread that
@@ -376,17 +376,17 @@ public class IO
             if (Thread.currentThread().isInterrupted())
             {
                 throw new IOException("Interrupted while reading stream",
-                    new InterruptedException());
+                        new InterruptedException());
             }
         }
         baos.flush();
         return baos.toByteArray();
     }
-    
+
     /**
      * Read the specified number of bytes from the given input stream, 
      * writing them into the given array at the given offset
-     * 
+     *
      * @param inputStream The input stream
      * @param data The array to write the data to
      * @param offset The offset inside the target array
@@ -398,31 +398,31 @@ public class IO
      * the sum of the given offset and the number of bytes to read is larger
      * than the length of the given array
      */
-    static void read(InputStream inputStream, byte data[], int offset, 
-        int numBytesToRead) throws IOException
+    static void read(InputStream inputStream, byte data[], int offset,
+                     int numBytesToRead) throws IOException
     {
         if (offset < 0)
         {
             throw new IllegalArgumentException(
-                "Array offset is negative: " + offset);
+                    "Array offset is negative: " + offset);
         }
         if (offset + numBytesToRead > data.length)
         {
             throw new IllegalArgumentException(
-                "Cannot write " + numBytesToRead
-                + " bytes into an array of length " + data.length
-                + " with an offset of " + offset);
+                    "Cannot write " + numBytesToRead
+                            + " bytes into an array of length " + data.length
+                            + " with an offset of " + offset);
         }
         int totalNumBytesRead = 0;
         while (true)
         {
             int read = inputStream.read(
-                data, offset + totalNumBytesRead, 
-                numBytesToRead - totalNumBytesRead);
+                    data, offset + totalNumBytesRead,
+                    numBytesToRead - totalNumBytesRead);
             if (read == -1)
             {
                 throw new IOException(
-                    "Could not read " + numBytesToRead + " bytes");
+                        "Could not read " + numBytesToRead + " bytes");
             }
             totalNumBytesRead += read;
             if (totalNumBytesRead == numBytesToRead)
@@ -431,24 +431,24 @@ public class IO
             }
         }
     }
-    
+
     /**
      * Read from the given input stream, writing into the given array,
      * until the array is filled.
-     * 
+     *
      * @param inputStream The input stream
      * @param data The array to write the data to
      * @throws IOException If an IO error occurs, or the end of the input
      * stream was encountered before the requested number of bytes have
      * been read 
      */
-    public static void read(InputStream inputStream, byte data[]) 
-        throws IOException
+    public static void read(InputStream inputStream, byte data[])
+            throws IOException
     {
         read(inputStream, data, 0, data.length);
     }
-    
-    
+
+
     /**
      * Private constructor to prevent instantiation
      */
@@ -456,5 +456,5 @@ public class IO
     {
         // Private constructor to prevent instantiation
     }
-    
+
 }

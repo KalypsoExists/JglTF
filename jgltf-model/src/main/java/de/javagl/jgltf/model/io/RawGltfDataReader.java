@@ -57,12 +57,12 @@ public class RawGltfDataReader
      * This is an integer corresponding to the ASCII string <code>"glTF"</code>
      */
     private static final int MAGIC_BINARY_GLTF_HEADER = 0x46546C67;
-    
+
     /**
      * The version number indicating glTF 1.0
      */
     private static final int BINARY_GLTF_VERSION_1 = 1;
-    
+
     /**
      * The version number indicating glTF 2.0
      */
@@ -71,7 +71,7 @@ public class RawGltfDataReader
     /**
      * Read the raw glTF data from the given input stream. The caller is
      * responsible for closing the given stream.
-     * 
+     *
      * @param inputStream The input stream
      * @return The {@link RawGltfData}
      * @throws IOException If an IO error occurs
@@ -81,8 +81,8 @@ public class RawGltfDataReader
         byte rawData[] = IO.readStream(inputStream);
         if (rawData.length >= 8)
         {
-            ByteBuffer data = 
-                ByteBuffer.wrap(rawData).order(ByteOrder.LITTLE_ENDIAN);
+            ByteBuffer data =
+                    ByteBuffer.wrap(rawData).order(ByteOrder.LITTLE_ENDIAN);
             IntBuffer intData = data.asIntBuffer();
             int magic = intData.get(0);
             if (magic == MAGIC_BINARY_GLTF_HEADER)
@@ -97,13 +97,13 @@ public class RawGltfDataReader
                     return RawBinaryGltfDataReaderV2.readBinaryGltf(data);
                 }
                 throw new IOException(
-                    "Unknown binary glTF version: " + version);
+                        "Unknown binary glTF version: " + version);
             }
         }
         ByteBuffer jsonData = Buffers.create(rawData);
         return new RawGltfData(jsonData, null);
     }
-    
+
     /**
      * Private constructor to prevent instantiation
      */
@@ -111,7 +111,6 @@ public class RawGltfDataReader
     {
         // Private constructor to prevent instantiation
     }
-    
-}
 
+}
 

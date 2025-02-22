@@ -51,7 +51,7 @@ public class GltfAssets
      * asset. This means that it does <b>not</b> contain a (non-empty) 
      * {@link GltfAsset#getBinaryData() binary data} blob, and it
      * does <b>not</b> contain references with (embedded) data URIs.
-     *  
+     *
      * @param gltfAsset The {@link GltfAsset}
      * @return Whether the asset is a default asset
      */
@@ -68,13 +68,13 @@ public class GltfAssets
         }
         return true;
     }
-    
+
     /**
      * Returns whether the given {@link GltfAsset} is an <i>embedded</i>
      * asset. This means that it does <b>not</b> contain a (non-empty) 
      * {@link GltfAsset#getBinaryData() binary data} blob, and it
      * does <b>not</b> contain references that refer to files.
-     *  
+     *
      * @param gltfAsset The {@link GltfAsset}
      * @return Whether the asset is an embedded asset
      */
@@ -91,7 +91,7 @@ public class GltfAssets
         }
         return true;
     }
-    
+
     /**
      * Returns whether the given {@link GltfAsset} is <i>binary</i>
      * asset. This means that it does does <b>not</b> contain references 
@@ -99,7 +99,7 @@ public class GltfAssets
      * this method returns <code>true</code> in this case even if 
      * the asset does not have a {@link GltfAsset#getBinaryData() binary data}
      * blob) 
-     *  
+     *
      * @param gltfAsset The {@link GltfAsset}
      * @return Whether the asset is a binary asset
      */
@@ -115,14 +115,14 @@ public class GltfAssets
         }
         return true;
     }
-    
+
     /**
      * Returns whether the given {@link GltfAsset} contains any 
      * {@link GltfReference} that has a URI that is <b>not</b> a data URI.<br>
      * <br>
      * If the asset does not contain any references, then 
      * <code>false</code> is returned.</br>
-     * 
+     *
      * @param gltfAsset The {@link GltfAsset}
      * @return Whether the asset contains (non-data) URI references
      */
@@ -139,14 +139,14 @@ public class GltfAssets
         }
         return false;
     }
-    
+
     /**
      * Returns whether the given {@link GltfAsset} contains any 
      * {@link GltfReference} that has a URI that is a data URI. <br>
      * <br>
      * If the asset does not contain any references, then 
      * <code>false</code> is returned.</br>
-     * 
+     *
      * @param gltfAsset The {@link GltfAsset}
      * @return Whether the asset contains data URI references
      */
@@ -163,8 +163,8 @@ public class GltfAssets
         }
         return false;
     }
-    
-    
+
+
     /**
      * Private constructor to prevent instantiation
      */

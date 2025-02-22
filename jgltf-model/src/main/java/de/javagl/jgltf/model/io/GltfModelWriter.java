@@ -58,127 +58,126 @@ public class GltfModelWriter
      * respective URI string will be resolved against the parent directory 
      * of the file, and the corresponding data will be written into the 
      * corresponding files. 
-     * 
+     *
      * @param gltfModel The {@link GltfModel}
      * @param fileName The file name
      * @throws IOException If an IO error occurs
      */
-    public void write(GltfModel gltfModel, String fileName) 
-        throws IOException
+    public void write(GltfModel gltfModel, String fileName)
+            throws IOException
     {
         write(gltfModel, new File(fileName));
     }
-    
+
     /**
      * Write the given {@link GltfModel} to the given file. External
      * references of buffers or images that are given via the respective 
      * URI string will be resolved against the parent directory of the 
      * given file, and the corresponding data will be written into the 
      * corresponding files. 
-     * 
+     *
      * @param gltfModel The {@link GltfModel}
      * @param file The file
      * @throws IOException If an IO error occurs
      */
-    public void write(GltfModel gltfModel, File file) 
-        throws IOException
+    public void write(GltfModel gltfModel, File file)
+            throws IOException
     {
         if (gltfModel instanceof GltfModelV1)
         {
             GltfModelV1 gltfModelV1 = (GltfModelV1)gltfModel;
-            GltfModelWriterV1 gltfModelWriterV1 = 
-                new GltfModelWriterV1();
+            GltfModelWriterV1 gltfModelWriterV1 =
+                    new GltfModelWriterV1();
             gltfModelWriterV1.write(gltfModelV1, file);
             return;
         }
-        GltfModelWriterV2 gltfModelWriterV2 = 
-            new GltfModelWriterV2();
+        GltfModelWriterV2 gltfModelWriterV2 =
+                new GltfModelWriterV2();
         gltfModelWriterV2.write(gltfModel, file);
     }
-    
+
     /**
      * Write the given {@link GltfModel} as a binary glTF asset to the
      * given file
-     * 
+     *
      * @param gltfModel The {@link GltfModel}
      * @param file The file
      * @throws IOException If an IO error occurs
      */
-    public void writeBinary(GltfModel gltfModel, File file) 
-        throws IOException
+    public void writeBinary(GltfModel gltfModel, File file)
+            throws IOException
     {
         try (OutputStream outputStream = new FileOutputStream(file))
         {
             writeBinary(gltfModel, outputStream);
         }
     }
-    
+
     /**
      * Write the given {@link GltfModel} as a binary glTF asset to the
      * given output stream. The caller is responsible for closing the 
      * given stream.
-     * 
+     *
      * @param gltfModel The {@link GltfModel}
      * @param outputStream The output stream
      * @throws IOException If an IO error occurs
      */
-    public void writeBinary(GltfModel gltfModel, OutputStream outputStream) 
-        throws IOException
+    public void writeBinary(GltfModel gltfModel, OutputStream outputStream)
+            throws IOException
     {
         if (gltfModel instanceof GltfModelV1)
         {
             GltfModelV1 gltfModelV1 = (GltfModelV1)gltfModel;
-            GltfModelWriterV1 gltfModelWriterV1 = 
-                new GltfModelWriterV1();
+            GltfModelWriterV1 gltfModelWriterV1 =
+                    new GltfModelWriterV1();
             gltfModelWriterV1.writeBinary(gltfModelV1, outputStream);
             return;
         }
-        GltfModelWriterV2 gltfModelWriterV2 = 
-            new GltfModelWriterV2();
+        GltfModelWriterV2 gltfModelWriterV2 =
+                new GltfModelWriterV2();
         gltfModelWriterV2.writeBinary(gltfModel, outputStream);
     }
-    
+
 
     /**
      * Write the given {@link GltfModel} as an embedded glTF asset to the
      * given file
-     * 
+     *
      * @param gltfModel The {@link GltfModel}
      * @param file The file
      * @throws IOException If an IO error occurs
      */
-    public void writeEmbedded(GltfModel gltfModel, File file) 
-        throws IOException
+    public void writeEmbedded(GltfModel gltfModel, File file)
+            throws IOException
     {
         try (OutputStream outputStream = new FileOutputStream(file))
         {
             writeEmbedded(gltfModel, outputStream);
         }
     }
-    
+
     /**
      * Write the given {@link GltfModel} as an embedded glTF asset to the
      * given output stream. The caller is responsible for closing the 
      * given stream.
-     * 
+     *
      * @param gltfModel The {@link GltfModel}
      * @param outputStream The output stream
      * @throws IOException If an IO error occurs
      */
-    public void writeEmbedded(GltfModel gltfModel, OutputStream outputStream) 
-        throws IOException
+    public void writeEmbedded(GltfModel gltfModel, OutputStream outputStream)
+            throws IOException
     {
         if (gltfModel instanceof GltfModelV1)
         {
             GltfModelV1 gltfModelV1 = (GltfModelV1)gltfModel;
-            GltfModelWriterV1 gltfModelWriterV1 = 
-                new GltfModelWriterV1();
+            GltfModelWriterV1 gltfModelWriterV1 =
+                    new GltfModelWriterV1();
             gltfModelWriterV1.writeEmbedded(gltfModelV1, outputStream);
             return;
         }
-        GltfModelWriterV2 gltfModelWriterV2 = 
-            new GltfModelWriterV2();
+        GltfModelWriterV2 gltfModelWriterV2 =
+                new GltfModelWriterV2();
         gltfModelWriterV2.writeEmbedded(gltfModel, outputStream);
     }
 }
-

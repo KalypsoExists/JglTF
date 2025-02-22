@@ -26,16 +26,12 @@
  */
 package de.javagl.jgltf.model.io.v2;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import de.javagl.jgltf.impl.v2.BufferView;
 import de.javagl.jgltf.impl.v2.GlTF;
 import de.javagl.jgltf.impl.v2.Image;
 import de.javagl.jgltf.model.GltfException;
-import de.javagl.jgltf.model.io.JacksonUtils;
 
 /**
  * Utility methods related to {@link GlTF}s
@@ -50,30 +46,20 @@ class GltfUtilsV2
      * in the copy. The goal of this method is to create a copy that is,
      * as far as reasonably possible, "structurally equivalent" to the
      * given input.
-     * 
-     * @param gltf The input 
+     *
+     * @param gltf The input
      * @return The copy
      * @throws GltfException If the copy can not be created
      */
     static GlTF copy(GlTF gltf)
     {
-        ObjectMapper objectMapper = 
-            JacksonUtils.createObjectMapper();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try
-        {
-            objectMapper.writeValue(baos, gltf);
-            return objectMapper.readValue(baos.toByteArray(), GlTF.class);
-        } 
-        catch (IOException e)
-        {
-            throw new GltfException("Could not copy glTF", e);
-        }
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJsonTree(gltf, GlTF.class), GlTF.class);
     }
 
     /**
      * Creates a shallow copy of the given {@link BufferView}
-     * 
+     *
      * @param bufferView The {@link BufferView}
      * @return The copy
      */
@@ -90,11 +76,11 @@ class GltfUtilsV2
         copy.setByteStride(bufferView.getByteStride());
         return copy;
     }
-    
-    
+
+
     /**
      * Creates a shallow copy of the given {@link Image}
-     * 
+     *
      * @param image The {@link Image}
      * @return The copy
      */
@@ -109,7 +95,7 @@ class GltfUtilsV2
         copy.setMimeType(image.getMimeType());
         return copy;
     }
-    
+
     /**
      * Private constructor to prevent instantiation
      */

@@ -88,4 +88,6 @@ public interface AccessorData
      */
     ByteBuffer createByteBuffer();
 
+    float getFloat(int elementIndex, int componentIndex);
+
 }
