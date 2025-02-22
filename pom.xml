@@ -42,6 +42,7 @@
     <module>jgltf-impl-v1</module>
     <module>jgltf-impl-v2</module>
     <module>jgltf-model</module>
+    <module>mcgltf</module>
   </modules>
 
   <build>
